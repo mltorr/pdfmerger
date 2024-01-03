@@ -3,6 +3,7 @@ from io import BytesIO
 import zipfile
 import fitz
 import os
+import re
 
 # Setting page title and header
 st.set_page_config(
@@ -14,8 +15,15 @@ st.set_page_config(
 st.title("PDF Merger")
 
 # Function to get reference number from a PDF filename
+#def get_ref_num(pdf_file):
+#    return int(pdf_file.split(".")[0])
+
 def get_ref_num(pdf_file):
-    return int(pdf_file.split(".")[0])
+    match = re.search(r'\d+', pdf_file)
+    if match:
+        return int(match.group())
+    else:
+        return 0
 
 # Function to process and modify the PDFs
 def process_pdfs(zip_file):
